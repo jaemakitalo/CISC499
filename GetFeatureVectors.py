@@ -19,6 +19,3 @@ def getFeatureVectors(datasetName):
         #data[i][:-1] -- data without superclass labels, data[i][-1] -- superclass labels
         featureVectors = gcl.getClusterLabels(pd.DataFrame(data.loc[i][:-1]), data.loc[i][-1], featureVectors)
     return featureVectors
-
-
-print(getFeatureVectors('analcatdata_aids'))
