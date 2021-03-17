@@ -7,7 +7,7 @@ import GetData as GD
 def gettingData ():
     data = GD.getData ("analcatdata_aids")
     #print (data.head()) #to see some of the data fully
-    
+
     return data
 
 
@@ -16,7 +16,7 @@ def divideData (dataset, train_percentage, feature_headers, target_header):
     #test_size: proportion of the dataset to include in the test split
     #train_size: not given, so will be complement of test_size
     #random_state: Controls the shuffling applied to the data before applying the split
-    xTrain, xTest, yTrain, yTest = train_test_split(feature_headers, target_header, test_size=0.2, random_state=0)
+    xTrain, xTest, yTrain, yTest = train_test_split(data[feature_headers], data[target_header], test_size=0.2, random_state=0)
 
     return xTrain, xTest, yTrain, yTest
 
