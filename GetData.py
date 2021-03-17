@@ -18,8 +18,7 @@ def getData(datasetName):
     datasetPath = os.path.join("datasets", datasetName + ".tsv")
     try:
         data = pd.read_csv(datasetPath, sep = "\t")
+        headers = list(data.columns[:-1])
     except:
         raise FileNotFoundError("Invalid dataset name")
-    return data
-
-print(getData("analcatdata_aids"))
+    return data, headers 
