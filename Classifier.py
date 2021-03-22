@@ -39,10 +39,10 @@ def main ():
 
     xTrain, xTest, yTrain, yTest = divideData(dataset, 0.7, headers[1:-1], headers[-1])
     #printing to see if data was divided correctly
-    # print ("xTrain Shape :: ", xTrain.shape)
-    # print ("yTrain Shape :: ", yTrain.shape)
-    # print ("xTest Shape :: ", xTest.shape)
-    # print ("yTest Shape :: ", yTest.shape)
+    # print ("xTrain Shape : ", xTrain.shape)
+    # print ("yTrain Shape : ", yTrain.shape)
+    # print ("xTest Shape : ", xTest.shape)
+    # print ("yTest Shape : ", yTest.shape)
 
     #creating random forest classifier instance
     trainedModel = rfc (xTrain, yTrain)
