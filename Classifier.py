@@ -33,8 +33,6 @@ def rfc (features, target):
 
 def main ():
     data, headers = gettingData()
-    headers.append ('target') #headers list from GetData does not the value 'target'
-
     dataset = addHeaders (data, headers)
 
     xTrain, xTest, yTrain, yTest = divideData(dataset, 0.7, headers[1:-1], headers[-1])

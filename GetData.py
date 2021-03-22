@@ -18,7 +18,7 @@ def getData(datasetName):
     datasetPath = os.path.join("datasets", datasetName + ".tsv")
     try:
         data = pd.read_csv(datasetPath, sep = "\t")
-        headers = list(data.columns[:-1])
+        headers = list(data.columns)
     except:
         raise FileNotFoundError("Invalid dataset name")
-    return data, headers 
+    return data, headers
