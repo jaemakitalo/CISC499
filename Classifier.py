@@ -1,5 +1,6 @@
 #predicts superclass labels
 from sklearn.ensemble import RandomForestClassifier
+from sklearn.feature_selection import SelectFromModel
 from sklearn.datasets import make_classification
 from sklearn.model_selection import train_test_split, cross_val_score
 from sklearn.metrics import accuracy_score
@@ -26,36 +27,65 @@ def divideData (dataset, train_percentage, feature_headers, target_header):
 
 #trains random forest classifier with features and target data
 def rfc (features, target):
-    classify = RandomForestClassifier(n_estimators=100, random_state=0)
+    classify = RandomForestClassifier(n_estimators=100, criterion='gini', random_state=0)
     classify.fit(features, target)
     return classify
-
+    #criterion = gini or entropy
+    #distribution of features, choose top 20%
 
 def main ():
     data, headers = gettingData()
     dataset = addHeaders (data, headers)
 
     xTrain, xTest, yTrain, yTest = divideData(dataset, 0.7, headers[1:-1], headers[-1])
-    #printing to see if data was divided correctly
-    # print ("xTrain Shape : ", xTrain.shape)
-    # print ("yTrain Shape : ", yTrain.shape)
-    # print ("xTest Shape : ", xTest.shape)
-    # print ("yTest Shape : ", yTest.shape)
 
     #creating random forest classifier instance
     trainedModel = rfc (xTrain, yTrain)
+
+    #select important features
+    sfm = SelectFromModel(trainedModel, threshold=0.20)
+    sfm.fit(xTrain, yTrain)
+
+    #to see which features were selected
+    important = []
+    for i in sfm.get_support(indices = True):
+        important.append(headers[i])
+    print ("selected features:", important)
+
+    #transforming the data to create a new dataset with only the important features
+    impXTrain = sfm.transform(xTrain)
+    impXTest = sfm.transform(xTest)
+
+    #creating new random forest classifier instance
+    trainedModelImportant = rfc (impXTrain, yTrain)
+
     #prints list of all the parameters for rfc
-    print ("Trained model: ", trainedModel)
+    #print ("Trained model: ", trainedModel)
+
+    #applying full featured classifier to test data
     predictions = trainedModel.predict(xTest)
 
+    print ("Initial training:")
     #taking some examples to see actual vs. predicted values
-    for i in range(0, 5):
-        print ("Actual: ", list(yTest)[i], "and Predicted: ", predictions[i])
+    for j in range(0, 5):
+        print ("Actual: ", list(yTest)[j], "and Predicted: ", predictions[j])
 
-
+    #accuract tests for the initial classifier
     print ("Train Accuracy: ", accuracy_score(yTrain, trainedModel.predict(xTrain)))
     print ("Test Accuracy: ", accuracy_score(yTest, predictions))
     print ("Confusion Matrix: \n", confusion_matrix(yTest, predictions))
     print ("Classification Report: \n", classification_report(yTest, trainedModel.predict(xTest)))
+
+    #applying full featured classifier to the selected test data
+    impPredictions = trainedModelImportant.predict(impXTest)
+    print ("Training after selection:")
+
+    for k in range(0, 5):
+        print ("Actual: ", list(yTest)[k], "and Predicted: ", impPredictions[k])
+
+    print ("Train Accuracy: ", accuracy_score(yTrain, trainedModelImportant.predict(impXTrain)))
+    print ("Test Accuracy: ", accuracy_score(yTest, impPredictions))
+    print ("Confusion Matrix: \n", confusion_matrix(yTest, impPredictions))
+    print ("Classification Report: \n", classification_report(yTest, trainedModelImportant.predict(impXTest)))
 
 main()
