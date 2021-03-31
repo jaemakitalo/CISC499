@@ -8,6 +8,7 @@ from sklearn.metrics import classification_report, confusion_matrix
 import GetData as GD
 
 #agaricus-lepiota works well (likely due to large number of samples)
+'''
 def gettingData ():
     data = GD.getData("analcatdata_aids")
     return data
@@ -16,7 +17,7 @@ def gettingData ():
 def addHeaders (data, headers):
     data.columns = headers
     return data
-
+'''
 #divides data into training and testing data
 def divideData (dataset, train_percentage, feature_headers, target_header):
     #test_size: proportion of the dataset to include in the test split
@@ -88,4 +89,4 @@ def main ():
     print ("Confusion Matrix: \n", confusion_matrix(yTest, impPredictions))
     print ("Classification Report: \n", classification_report(yTest, trainedModelImportant.predict(impXTest)))
 
-main()
+#%main()

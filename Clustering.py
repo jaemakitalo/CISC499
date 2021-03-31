@@ -7,7 +7,7 @@
 #https://scikit-learn.org/stable/modules/clustering.html#k-means
 #https://scikit-learn.org/stable/modules/generated/sklearn.cluster.KMeans.html#sklearn.cluster.KMeans
 
-from sklearn.cluster import kmeans as clustering
+from sklearn.cluster import KMeans as clustering
 
 def clustering (data, n):
     #k-means
