@@ -27,7 +27,7 @@ def divideData (dataset, train_percentage, feature_headers, target_header):
 
 #trains random forest classifier with features and target data
 def rfc (features, target):
-    classify = RandomForestClassifier(n_estimators=100, criterion='gini', random_state=0)
+    classify = RandomForestClassifier(n_estimators=100, criterion='entropy', random_state=0)
     classify.fit(features, target)
     return classify
     #criterion = gini or entropy
@@ -43,7 +43,7 @@ def main ():
     trainedModel = rfc (xTrain, yTrain)
 
     #select important features
-    sfm = SelectFromModel(trainedModel, threshold=0.20)
+    sfm = SelectFromModel(trainedModel, threshold=1e-2)
     sfm.fit(xTrain, yTrain)
 
     #to see which features were selected
