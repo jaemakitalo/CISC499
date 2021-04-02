@@ -6,9 +6,13 @@ from sklearn.model_selection import train_test_split, cross_val_score
 from sklearn.metrics import accuracy_score
 from sklearn.metrics import classification_report, confusion_matrix
 import GetData as GD
+import pandas as pd
+import numpy as np
+import matplotlib.pyplot as plt
+import seaborn as sns
 
 #agaricus-lepiota works well (likely due to large number of samples)
-'''
+
 def gettingData ():
     data = GD.getData("analcatdata_aids")
     return data
@@ -17,7 +21,7 @@ def gettingData ():
 def addHeaders (data, headers):
     data.columns = headers
     return data
-'''
+
 #divides data into training and testing data
 def divideData (dataset, train_percentage, feature_headers, target_header):
     #test_size: proportion of the dataset to include in the test split
@@ -33,6 +37,23 @@ def rfc (features, target):
     return classify
     #criterion = gini or entropy
     #distribution of features, choose top 20%
+
+def plot_feature_importance(importance,names,model_type):
+    feature_importance = np.array(importance)
+    feature_names = np.array(names)
+
+    data={'feature_names':feature_names,'feature_importance':feature_importance}
+    fi_df = pd.DataFrame(data)
+
+    fi_df.sort_values(by=['feature_importance'], ascending=False,inplace=True)
+
+    plt.figure(figsize=(10,8))
+    #Plot Searborn bar chart
+    sns.barplot(x=fi_df['feature_importance'], y=fi_df['feature_names'])
+    #Add chart labels
+    plt.title(model_type + 'FEATURE IMPORTANCE')
+    plt.xlabel('FEATURE IMPORTANCE')
+    plt.ylabel('FEATURE NAMES')
 
 def main ():
     data, headers = gettingData()
@@ -89,4 +110,6 @@ def main ():
     print ("Confusion Matrix: \n", confusion_matrix(yTest, impPredictions))
     print ("Classification Report: \n", classification_report(yTest, trainedModelImportant.predict(impXTest)))
 
-#%main()
+    plot_feature_importance(trainedModel.feature_importances_, xTrain.columns, 'RANDOM FOREST')
+
+main()
