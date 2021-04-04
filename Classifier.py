@@ -1,6 +1,6 @@
 #predicts superclass labels
 from sklearn.ensemble import RandomForestClassifier
-from sklearn.feature_selection import SelectFromModel
+from sklearn.feature_selection import SelectFromModel, SelectPercentile, f_classif
 from sklearn.datasets import make_classification
 from sklearn.model_selection import train_test_split, cross_val_score
 from sklearn.metrics import accuracy_score
@@ -14,7 +14,7 @@ import seaborn as sns
 #agaricus-lepiota works well (likely due to large number of samples)
 
 def gettingData ():
-    data = GD.getData("analcatdata_aids")
+    data = GD.getData("adult")
     return data
 
 #adds header labels to the data
@@ -54,6 +54,7 @@ def plot_feature_importance(importance,names,model_type):
     plt.title(model_type + 'FEATURE IMPORTANCE')
     plt.xlabel('FEATURE IMPORTANCE')
     plt.ylabel('FEATURE NAMES')
+    plt.show()
 
 def main ():
     data, headers = gettingData()
@@ -65,7 +66,11 @@ def main ():
     trainedModel = rfc (xTrain, yTrain)
 
     #select important features
-    sfm = SelectFromModel(trainedModel, threshold=1e-2)
+    #sfm = SelectFromModel(trainedModel, threshold=1e-2)
+    #sfm.fit(xTrain, yTrain)
+
+    #choosing percentile
+    sfm = SelectPercentile (f_classif, percentile=20)
     sfm.fit(xTrain, yTrain)
 
     #to see which features were selected
