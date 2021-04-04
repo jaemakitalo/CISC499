@@ -14,7 +14,7 @@ import seaborn as sns
 #agaricus-lepiota works well (likely due to large number of samples)
 
 def gettingData ():
-    data = GD.getData("adult")
+    data = GD.getData("analcatdata_aids")
     return data
 
 #adds header labels to the data
@@ -32,11 +32,9 @@ def divideData (dataset, train_percentage, feature_headers, target_header):
 
 #trains random forest classifier with features and target data
 def rfc (features, target):
-    classify = RandomForestClassifier(n_estimators=100, criterion='entropy', random_state=0)
+    classify = RandomForestClassifier(n_estimators=250, criterion='entropy', random_state=0)
     classify.fit(features, target)
     return classify
-    #criterion = gini or entropy
-    #distribution of features, choose top 20%
 
 def plot_feature_importance(importance,names,model_type):
     feature_importance = np.array(importance)
@@ -70,7 +68,7 @@ def main ():
     #sfm.fit(xTrain, yTrain)
 
     #choosing percentile
-    sfm = SelectPercentile (f_classif, percentile=20)
+    sfm = SelectPercentile (f_classif, percentile=80)
     sfm.fit(xTrain, yTrain)
 
     #to see which features were selected
@@ -115,6 +113,8 @@ def main ():
     print ("Confusion Matrix: \n", confusion_matrix(yTest, impPredictions))
     print ("Classification Report: \n", classification_report(yTest, trainedModelImportant.predict(impXTest)))
 
+    #the xTrain used here is transformed, so you can use another variable to copy the initial xTrain
+    #to use here, and that should give the full dataset we want here?
     plot_feature_importance(trainedModel.feature_importances_, xTrain.columns, 'RANDOM FOREST')
 
 main()
