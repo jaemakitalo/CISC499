@@ -117,4 +117,6 @@ def classifying ():
     #to use here, and that should give the full dataset we want here?
     plot_feature_importance(trainedModel.feature_importances_, xTrain.columns, 'RANDOM FOREST')
 
-classifying()
+    return dataset
+
+# classifying()
