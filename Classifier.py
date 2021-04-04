@@ -95,7 +95,7 @@ def classifying ():
     for j in range(0, 5):
         print ("Actual: ", list(yTest)[j], "and Predicted: ", predictions[j])
 
-    #accuract tests for the initial classifier
+    #accuracy tests for the initial classifier
     print ("Train Accuracy: ", accuracy_score(yTrain, trainedModel.predict(xTrain)))
     print ("Test Accuracy: ", accuracy_score(yTest, predictions))
     print ("Confusion Matrix: \n", confusion_matrix(yTest, predictions))
@@ -117,6 +117,7 @@ def classifying ():
     #to use here, and that should give the full dataset we want here?
     plot_feature_importance(trainedModel.feature_importances_, xTrain.columns, 'RANDOM FOREST')
 
+    #meant to return impPredictions, the selected features?
     return dataset
 
 # classifying()
