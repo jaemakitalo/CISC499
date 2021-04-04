@@ -1,11 +1,6 @@
-import GetData as GD
 import Classifier as CLA
 import Clustering as CLU
 from sklearn.cluster import KMeans as clustering
-
-def gettingData ():
-    data = GD.getData("analcatdata_aids")
-    return data
 
 if __name__ == "__main__":
     dataset = CLA.classifying()
