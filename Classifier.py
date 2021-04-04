@@ -54,7 +54,7 @@ def plot_feature_importance(importance,names,model_type):
     plt.ylabel('FEATURE NAMES')
     plt.show()
 
-def main ():
+def classifying ():
     data, headers = gettingData()
     dataset = addHeaders (data, headers)
 
@@ -117,4 +117,4 @@ def main ():
     #to use here, and that should give the full dataset we want here?
     plot_feature_importance(trainedModel.feature_importances_, xTrain.columns, 'RANDOM FOREST')
 
-main()
+classifying()
