@@ -1,23 +1,9 @@
 import Classifier as CLA
 import Clustering as CLU
-from sklearn.cluster import KMeans as clustering
-from sklearn.decomposition import PCA
-import matplotlib.pyplot as plt
 
 if __name__ == "__main__":
     dataset = CLA.classifying()
-    pca = PCA(2)
-    data = pca.fit_transform(dataset)
-    data.shape
-    # pass through data just under chosen headers
-    print("Clustering the data...")
-    kmeans = clustering(n_clusters=5, random_state=0).fit(data)
-    #print("predicted labels: ")
-    #print(kmeans.labels_)
-    #print("Cluster centers: ")
-    #print(kmeans.cluster_centers_)
-    plt.scatter(data[:,0],data[:,1],c=kmeans.labels_, cmap='rainbow')
-    plt.show()
+    CLU.cluster(dataset)
 
 '''
 figures:
