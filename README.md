@@ -1,5 +1,25 @@
 # CISC 499
 
+### How to download and run this project
+Make sure you have `git` installed on your computer's command-line tool (Terminal for macOS and Linux, Command Prompt for Windows). Then run the following command to clone this project to your desired directory:
+
+```
+git lfs clone https://github.com/jaemakitalo/CISC499.git
+```
+
+This will download large files (data sets) properly using Git Large File Storage.
+
+Then make sure you have Python 3 installed and run the following command to install dependencies:
+
+```
+python -m pip install -r requirement.txt
+```
+
+To run the program, run the following command:
+
+```
+python main.py
+```
 
 ### References
 PMLB was primarily developed at the University of Pennsylvania by:
