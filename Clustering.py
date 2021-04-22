@@ -23,10 +23,10 @@ def cluster (dataset):
     print("Clustering the data...")
     # Clusters the data and visualizes best number of clusters using the elbow method
     Error =[]
-    for i in range(2,10): 
+    for i in range(2,11): 
         kmeans = clustering(n_clusters=i).fit(dataset)
         Error.append(kmeans.inertia_)
-    plt.plot(range(2, 10), Error)
+    plt.plot(range(2, 11), Error)
     plt.title('Elbow method')
     plt.xlabel('No of clusters')
     plt.ylabel('Error')
@@ -48,6 +48,7 @@ def cluster (dataset):
     print("Cluster Centers: ")
     print(kcluster.cluster_centers_)
     # visualizes data
+    plt.title('K-MEANS Clustering')
     plt.scatter(data[:,0], data[:,1], c= y_kcluster, cmap='rainbow')
     plt.show()
     

@@ -14,7 +14,7 @@ import seaborn as sns
 #agaricus-lepiota works well (likely due to large number of samples)
 
 def gettingData ():
-    data = GD.getData("analcatdata_aids")
+    data = GD.getData("adult")
     return data
 
 #adds header labels to the data
@@ -45,7 +45,7 @@ def plot_feature_importance(importance,names,model_type):
 
     fi_df.sort_values(by=['feature_importance'], ascending=False,inplace=True)
 
-    plt.figure(figsize=(10,8))
+    #plt.figure(figsize=(10,8))
     #Plot Searborn bar chart
     sns.barplot(x=fi_df['feature_importance'], y=fi_df['feature_names'])
     #Add chart labels
@@ -120,4 +120,5 @@ def classifying ():
     #meant to return impPredictions, the selected features?
     return dataset
 
-# classifying()
+if __name__ == "__main__":
+    classifying()
